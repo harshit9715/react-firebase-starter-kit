@@ -9,7 +9,9 @@ class Firebase {
         app.initializeApp(config);
 
         this.auth = app.auth();
+        this.auth.useEmulator("http://localhost:9099")
         this.db = app.database();
+        this.db.useEmulator("localhost", 9000);
     }
 
     doCreateUserWithEmailAndPassword = (email, password) =>
@@ -28,7 +30,7 @@ class Firebase {
     // *** User API ***
 
     user = uid => this.db.ref(`users/${uid}`);
-
+    
     users = () => this.db.ref('users');
 
 }
