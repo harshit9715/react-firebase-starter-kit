@@ -21,9 +21,20 @@ If you are starting with a react project and using firebase as backend. You migh
 ```bash
 # Install dependencies
 npm i
+# For using emulators initialize your project with firebase-cli
+firebase init
+
+# start firebase emulators
+npm run emu
+
 # Start the server
 npm start
 ```
+
+### Refrences
+
+- [firebase-cli](https://firebase.google.com/docs/cli)
+- [Introduction to Firebase Local Emulator Suite](https://firebase.google.com/docs/emulator-suite)
 
 ### Addons
 
