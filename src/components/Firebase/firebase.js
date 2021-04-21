@@ -9,10 +9,40 @@ class Firebase {
         app.initializeApp(config);
 
         this.auth = app.auth();
-        this.auth.useEmulator("http://localhost:9099")
         this.db = app.database();
-        this.db.useEmulator("localhost", 9000);
+
+        if (process.env.NODE_ENV === 'development') {
+            this.auth.useEmulator(`http://localhost:${config.auth_emu_port}`)
+            this.db.useEmulator("localhost", config.db_emu_port);
+        }
     }
+
+
+    doAllowSocialSignin = (type) => {
+        var provider;
+        switch (type) {
+            case 'fb': 
+                provider = new app.auth.FacebookAuthProvider()
+                break
+            default:
+                provider = new app.auth.GoogleAuthProvider();
+                break
+        }
+        provider.addScope('profile');
+        provider.addScope('email');
+
+        this.auth.signInWithPopup(provider)
+        
+            // .then(function (result) {
+            // // This gives you a Google Access Token.
+            // var token = result.credential.accessToken;
+            // // The signed-in user info.
+            // var user = result.user;
+
+            // console.log(token, user);
+        // });
+    }
+
 
     doCreateUserWithEmailAndPassword = (email, password) =>
         this.auth.createUserWithEmailAndPassword(email, password);
@@ -30,7 +60,6 @@ class Firebase {
     // *** User API ***
 
     user = uid => this.db.ref(`users/${uid}`);
-    
     users = () => this.db.ref('users');
 
 }

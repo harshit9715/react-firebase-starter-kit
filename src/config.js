@@ -6,7 +6,11 @@ const config = {
     storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
     messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_ID,
-    measurementId: process.env.REACT_APP_MEASUREMENT_ID
+    measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+
+    // Dev configs for emulator
+    auth_emu_port: process.env.REACT_APP_AUTH_EMU_PORT,
+    db_emu_port: process.env.REACT_APP_DB_EMU_PORT,
 };
 
 export default config;

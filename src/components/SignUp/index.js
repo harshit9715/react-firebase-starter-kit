@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
+import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
 
 import * as ROUTES from '../../constants/routes';
- 
+import styles from './SignUp.module.css';
+
 const SignUpPage = () => (
   <div>
     <h1>SignUp</h1>
@@ -23,6 +25,10 @@ class SignUpFormBase extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
+  }
+
+  onSocialSignin = (type) => {
+    this.props.firebase.doAllowSocialSignin(type)
   }
  
   onSubmit = event => {
@@ -70,7 +76,8 @@ class SignUpFormBase extends Component {
       username === '';
       
       return (
-        <form onSubmit={this.onSubmit}>
+       <>
+         <form onSubmit={this.onSubmit}>
           <input
             name="username"
             value={username}
@@ -103,7 +110,12 @@ class SignUpFormBase extends Component {
    
           {error && <p>{error.message}</p>}
         </form>
-      );
+          <hr/>
+          <div className={styles.Container_Social}>
+            <GoogleLoginButton onClick={() => this.onSocialSignin()}>Signin With Google </GoogleLoginButton>
+            <FacebookLoginButton onClick={() => this.onSocialSignin('fb')}>Signin With Facebook </FacebookLoginButton>
+          </div>
+       </>);
   }
 }
  
